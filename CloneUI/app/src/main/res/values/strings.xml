@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">UI1</string>
+    <string name="colored_text">다방 AI가 추천한 <font color="#326CF9">서초동</font> 매물 🤖</string>
+    <string name="first_house_price">월세 4000/40</string>
+    <string name="first_house_structure">2층, 관리비 10만</string>
+    <string name="second_house_price">월세 300/530</string>
+    <string name="second_house_structure">15층, 관리비 25만</string>
+    <string name="third_house_price">월세 200/115</string>
+    <string name="third_house_structure">5층, 관리비 14만</string>
+    <string name="explanation">전입OK, 보안설비 잘되어있는 집입니다.</string>
+    <string name="second_house_explanation">전입OK, 보안설비 잘되어있는 집입니다.</string>
+    <string name="third_house_explanation">전입OK, 보안설비 잘되어있는 집입니다.</string>
+
+
+    <string name="one_room">원룸</string>
+    <string name="apartment">아파트</string>
+    <string name="officetel">오피스텔</string>
+
 </resources>
