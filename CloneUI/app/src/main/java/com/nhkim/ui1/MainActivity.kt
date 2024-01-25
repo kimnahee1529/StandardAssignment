@@ -8,74 +8,48 @@ import android.text.Layout
 import android.util.Log
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.nhkim.ui1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val firstHouse = findViewById<ConstraintLayout>(R.id.first_house)
-        val secondHouse = findViewById<ConstraintLayout>(R.id.second_house)
-        val thirdHouse = findViewById<ConstraintLayout>(R.id.third_house)
+        val mainFragment = MainFragment()
 
-        val btnLikeHouse = findViewById<ConstraintLayout>(R.id.btn_like_house)
-
-        val heartViews = listOf(
-            findViewById<ImageView>(R.id.empty_heart1),
-            findViewById<ImageView>(R.id.empty_heart2),
-            findViewById<ImageView>(R.id.empty_heart3)
-        )
-
-        heartViews.forEach { heartView ->
-            heartView.tag = false
-            heartView.setOnClickListener {
-                val isClicked = heartView.tag as Boolean
-                if(!isClicked){
-                    heartView.setImageResource(R.drawable.full_heart)
-                    heartView.tag = true
-                }
-                else{
-                    heartView.setImageResource(R.drawable.empty_heart)
-                    heartView.tag = false
-                }
-                Log.d("1번째 집",heartViews[0].tag.toString())
-                Log.d("2번째 집",heartViews[1].tag.toString())
-                Log.d("3번째 집",heartViews[2].tag.toString())
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().apply {
+                add(R.id.main_container, mainFragment)
+                commit()
             }
         }
 
-        firstHouse.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:01011111111")
-            startActivity(intent)
-        }
-
-        secondHouse.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:01022222222")
-            startActivity(intent)
-        }
-
-        thirdHouse.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:01033333333")
-            startActivity(intent)
-        }
-
-        btnLikeHouse.setOnClickListener {
-            val sendList = mutableListOf<String>()
-
-            heartViews.forEach { hearView ->
-                sendList.add((hearView.tag as Boolean).toString())
+        binding.navView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.home1_icon -> {
+                    loadFragment(MainFragment())
+                    true
+                }
+                R.id.heart_icon -> {
+                    loadFragment(FavoritesFragment())
+                    true
+                }
+                else -> false
             }
-
-            // sendList에는 [true, false, false]같은 배열이 들어있음
-            val intent = Intent(this, LikeHomeActivity::class.java)
-            intent.putStringArrayListExtra("sendList", ArrayList(sendList))
-            startActivity(intent)
         }
+
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .commit()
     }
 
 }
